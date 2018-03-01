@@ -1,0 +1,10 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "weakget"
+author = "Sye van der Veen"
+author-email = "sye@greenfieldlabs.ca"
+home-page = ""
+classifiers = ["License :: Public Domain"]
