@@ -49,22 +49,22 @@ def test_getattr():
 
 
 def test_getitem():
-    result = weakget('abc')[1] % default
-    assert result == 'b'
+    result = weakget("abc")[1] % default
+    assert result == "b"
 
-    result = weakget('abc')[-1] % default
-    assert result == 'c'
+    result = weakget("abc")[-1] % default
+    assert result == "c"
 
-    result = weakget('abc')[1:3] % default
-    assert result == 'bc'
+    result = weakget("abc")[1:3] % default
+    assert result == "bc"
 
     result = weakget([None])[0] % default
     assert result is None
 
-    result = weakget(dict(a=1, b=2))['b'] % default
+    result = weakget(dict(a=1, b=2))["b"] % default
     assert result == 2
 
-    result = weakget(dict(a=None))['a'] % default
+    result = weakget(dict(a=None))["a"] % default
     assert result is None
 
     with pytest.raises(TypeError):
@@ -77,27 +77,27 @@ def test_getitem():
         weakget(None)[1:3]
 
     with pytest.raises(TypeError):
-        weakget(None)['b']
+        weakget(None)["b"]
 
-    result = weakget('abc')[99] % default
+    result = weakget("abc")[99] % default
     assert result is default
 
-    result = weakget('abc')[-99] % default
+    result = weakget("abc")[-99] % default
     assert result is default
 
-    result = weakget('abc')[99:999] % default
-    assert result == ''
+    result = weakget("abc")[99:999] % default
+    assert result == ""
 
     with pytest.raises(TypeError):
-        weakget('abc')['b']
+        weakget("abc")["b"]
 
-    result = weakget(dict(a=1, b=2))['z'] % default
+    result = weakget(dict(a=1, b=2))["z"] % default
     assert result is default
 
 
 def test_call():
-    result = weakget('abc').upper() % default
-    assert result == 'ABC'
+    result = weakget("abc").upper() % default
+    assert result == "ABC"
 
     result = weakget(None).upper() % default
     assert result is default
@@ -105,5 +105,5 @@ def test_call():
     result = weakget(5).upper() % default
     assert result is default
 
-    result = weakget({}).pop('b', None) % default
+    result = weakget({}).pop("b", None) % default
     assert result is None

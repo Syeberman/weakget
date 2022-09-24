@@ -19,7 +19,7 @@ def test_getitem():
 
     assert _weakget__nothing[1:3] is _weakget__nothing
 
-    assert _weakget__nothing['b'] is _weakget__nothing
+    assert _weakget__nothing["b"] is _weakget__nothing
 
     result = _weakget__nothing[1] % default
     assert result is default
@@ -30,7 +30,7 @@ def test_getitem():
     result = _weakget__nothing[1:3] % default
     assert result is default
 
-    result = _weakget__nothing['b'] % default
+    result = _weakget__nothing["b"] % default
     assert result is default
 
 

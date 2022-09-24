@@ -5,14 +5,13 @@ import pytest
 from weakget import weakget, pep505, _weakget__nothing
 
 
-class attrs():
+class attrs:
     def __init__(self):
         self.attr = None
 
 
 def attr_constructors():
-    """A decorator for parametrized tests that test particular (mutable) attribute accesses.
-    """
+    """A decorator for parametrized tests that test particular (mutable) attribute accesses."""
     return pytest.mark.parametrize(
         "newobj",
         [
@@ -20,13 +19,12 @@ def attr_constructors():
             lambda: pep505(attrs()),
             lambda: _weakget__nothing,  # a singleton
         ],
-        ids=('weakget', 'pep505', '_weakget__nothing'),
+        ids=("weakget", "pep505", "_weakget__nothing"),
     )
 
 
 def sequence_constructors():
-    """A decorator for parametrized tests that test particular (mutable) sequence operations.
-    """
+    """A decorator for parametrized tests that test particular (mutable) sequence operations."""
     return pytest.mark.parametrize(
         "newobj",
         [
@@ -34,27 +32,25 @@ def sequence_constructors():
             lambda: pep505([0, 1, 2]),
             lambda: _weakget__nothing,  # a singleton
         ],
-        ids=('weakget', 'pep505', '_weakget__nothing'),
+        ids=("weakget", "pep505", "_weakget__nothing"),
     )
 
 
 def mapping_constructors():
-    """A decorator for parametrized tests that test particular (mutable) mapping operations.
-    """
+    """A decorator for parametrized tests that test particular (mutable) mapping operations."""
     return pytest.mark.parametrize(
         "newobj",
         [
-            lambda: weakget({'item': 0}),
-            lambda: pep505({'item': 0}),
+            lambda: weakget({"item": 0}),
+            lambda: pep505({"item": 0}),
             lambda: _weakget__nothing,  # a singleton
         ],
-        ids=('weakget', 'pep505', '_weakget__nothing'),
+        ids=("weakget", "pep505", "_weakget__nothing"),
     )
 
 
 def number_constructors():
-    """A decorator for parametrized tests that test particular number operations.
-    """
+    """A decorator for parametrized tests that test particular number operations."""
     return pytest.mark.parametrize(
         "newobj",
         [
@@ -62,7 +58,7 @@ def number_constructors():
             lambda: pep505(0),
             lambda: _weakget__nothing,  # a singleton
         ],
-        ids=('weakget', 'pep505', '_weakget__nothing'),
+        ids=("weakget", "pep505", "_weakget__nothing"),
     )
 
 
@@ -93,9 +89,9 @@ def test_setitem_sequence(newobj):
 @mapping_constructors()
 def test_setitem_mapping(newobj):
     with pytest.raises(TypeError):
-        newobj()['item'] = None
+        newobj()["item"] = None
     with pytest.raises(TypeError):
-        newobj()['newitem'] = None
+        newobj()["newitem"] = None
 
 
 @sequence_constructors()
@@ -109,9 +105,9 @@ def test_delitem_sequence(newobj):
 @mapping_constructors()
 def test_delitem_mapping(newobj):
     with pytest.raises(TypeError):
-        del newobj()['item']
+        del newobj()["item"]
     with pytest.raises(TypeError):
-        del newobj()['missingitem']
+        del newobj()["missingitem"]
 
 
 @number_constructors()  # underlying int supports bool

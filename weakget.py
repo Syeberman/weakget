@@ -1,7 +1,7 @@
 """weakget - Chain multiple `getattr` and `.get` calls into one expression
 """
 
-__version__ = "0.2"
+__version__ = "1.0"
 
 
 class weakget:
@@ -10,11 +10,12 @@ class weakget:
 
         weakget(obj).attr[5].meth()['key'] % default
     """
+
     __slots__ = "_weakget__obj"
 
     def __new__(cls, obj):
         if isinstance(obj, _weakget__types):
-            raise TypeError('weakget() argument must not be a fellow weakget object')
+            raise TypeError("weakget() argument must not be a fellow weakget object")
 
         self = super().__new__(cls)
         self._weakget__obj = obj
@@ -48,7 +49,7 @@ class weakget:
 
 
 class pep505:
-    """pep505 performs None-aware lookups similar to those described in PEP 505.  It allows chaining
+    """pep505 performs None-aware lookups similar to those described in PEP 505. It allows chaining
     multiple attribute and item lookups into a single expression, returning a default value if any
     one of the lookups return None.
 
@@ -59,11 +60,12 @@ class pep505:
 
         pep505(obj1, obj2, obj3) % default
     """
+
     __slots__ = "_pep505__obj"
 
     def __new__(cls, *objs):
         if not objs:
-            raise TypeError('pep505() expected >0 arguments')
+            raise TypeError("pep505() expected >0 arguments")
 
         # Choose the first non-None argument (à la ??), then wrap it in a pep505 object (à la ?.)
         for obj in objs:
@@ -77,7 +79,7 @@ class pep505:
             return _weakget__nothing
 
         if isinstance(obj, _weakget__types):
-            raise TypeError('pep505() argument must not be a fellow weakget object')
+            raise TypeError("pep505() argument must not be a fellow weakget object")
 
         self = super().__new__(cls)
         self._pep505__obj = obj
@@ -103,12 +105,13 @@ class pep505:
 
 
 class _weakget__NothingType:
-    """Sentinnel singleton signifying unsuccessful salvage of state.
+    """Sentinel singleton signifying unsuccessful salvage of state.
 
     ...or in other words...
 
     The object returned when weakget or pep505 fails to retrieve a value.
     """
+
     __slots__ = ()
 
     def __getattr__(self, name):
@@ -137,16 +140,16 @@ _weakget__types = (weakget, pep505, _weakget__NothingType)
 
 
 # TODO We _could_ support `__bool__`, returning `True` iff we haven't failed a get and
-# `_weakget__obj` evaluates to `True`.  This could be used like `if weakget(x).foo`.  However, this
+# `_weakget__obj` evaluates to `True`. This could be used like `if weakget(x).foo`. However, this
 # would enable the `or` operator (`weakget(x).foo or 50`), which might confuse people who might
-# expect `or` to work like `%`.  Remember: one of the goals of this library is to avoid the
-# confusion described here: https://www.python.org/dev/peps/pep-0505/#or-operator.
+# expect `or` to work like `%`. Remember: one of the goals of this library is to avoid the
+# confusion described here: https://peps.python.org/pep-0505/#specialness-of-none.
 
 # TODO Similarly, we _could_ support `__eq__` and `__ne__`, allowing for `if weakget(x).foo == 33`.
 # It's pretty clear that `==` would return `False` on a failed get, but what about `!=`?  If
 # `__ne__` also returns `False`, then the objects would be neither equal nor not-equal, which is
-# very surprising.  If `__ne__` instead returns `True`, then `if weakget(x).foo != 33` would be
-# true even though `x.foo` doesn't exist.  How can something that doesn't exist not equal `33`?
+# very surprising. If `__ne__` instead returns `True`, then `if weakget(x).foo != 33` would be
+# true even though `x.foo` doesn't exist. How can something that doesn't exist not equal `33`?
 
-# TODO Need a better name for `pep505`.  Current favourite is `PP`, because it looks like the
+# TODO Need a better name for `pep505`. Current favourite is `PP`, because it looks like the
 # proposed `??` operator (also used in C#).

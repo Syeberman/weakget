@@ -5,6 +5,6 @@ build-backend = "flit.buildapi"
 [tool.flit.metadata]
 module = "weakget"
 author = "Sye van der Veen"
-author-email = "sye@greenfieldlabs.ca"
+author-email = "syeberman@gmail.com"
 home-page = ""
 classifiers = ["License :: Public Domain"]
