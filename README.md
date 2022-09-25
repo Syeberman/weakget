@@ -31,7 +31,7 @@ except (LookupError, AttributeError):
 
 ## Usage
 
-Install from [PyPI](https://pypi.python.org/pypi) using `pip`:
+Install from [PyPI](https://pypi.org/project/weakget) using `pip`:
 
 `pip install weakget`
 
